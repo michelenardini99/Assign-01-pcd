@@ -32,12 +32,18 @@ public abstract class AbstractAgent extends Thread{
 		this.env = env;
 	}
 
-	abstract public void step();
+	abstract public void sense();
+	abstract public void decide();
+	abstract public void act();
 
 	public void run(){
 		while (!isInterrupted()) {
 			try {
-				step();
+				sense();
+				decide();
+				synchronized (env){
+					act();
+				}
 				env.agentStepped();
 				env.waitForEnvironment();
 				if(env.isLastStep()){

@@ -42,24 +42,24 @@ public abstract class CarAgent extends AbstractAgent{
 	 * Basic behaviour of a car agent structured into a sense/decide/act structure 
 	 * 
 	 */
-	public void step() {
 
-		/* sense */
-
-		AbstractEnvironment env = this.getEnv();		
+	public void sense(){
+		AbstractEnvironment env = this.getEnv();
 		currentPercept = (CarPercept) env.getCurrentPercepts(getIdAgent());
+	}
 
-		/* decide */
+	public void decide(){
 		selectedAction = Optional.empty();
-		
-		decide(dt);
-		
-		/* act */
 
+		decide(dt);
+	}
+
+	public void act(){
 		if (selectedAction.isPresent()) {
-			env.doAction(getIdAgent(), selectedAction.get());
+			this.getEnv().doAction(getIdAgent(), selectedAction.get());
 		}
 	}
+
 	
 	/**
 	 * 
